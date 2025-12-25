@@ -31,7 +31,7 @@ public class MoviesHandler extends BaseHttpHandler {
                 case "GET":
                     if (path.equals("/movies")) {
                         handleGetMovies(exchange);
-                    } else if (path.equals("/movies/\\d+")) {
+                    } else if (isMovieByIdPath(path)) {
                         handleGetMovieById(exchange);
                     } else {
                         sendError(exchange, 404, "Неверный путь");
@@ -49,7 +49,7 @@ public class MoviesHandler extends BaseHttpHandler {
                     break;
 
                 case "DELETE":
-                    if (path.equals("/movies/\\d+")) {
+                    if (isMovieByIdPath(path)) {
                         handleDeleteMovie(exchange);
                     } else {
                         sendError(exchange, 404, "Неверный путь");
@@ -63,6 +63,12 @@ public class MoviesHandler extends BaseHttpHandler {
         } catch (Exception e) {
             sendError(exchange, 500, "Ошибка сервера");
         }
+    }
+
+    private boolean isMovieByIdPath(String path) {
+        return path.startsWith("/movies/") &&
+                path.length() > "/movies/".length() &&
+                path.substring("/movies/".length()).matches("\\d+");
     }
 
     private void handleGetMovies(HttpExchange exchange) throws IOException {
