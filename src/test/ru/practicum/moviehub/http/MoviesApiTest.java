@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.practicum.moviehub.model.Movie;
-import ru.practicum.moviehub.store.MoviesStore;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
