@@ -25,7 +25,8 @@ public class MoviesApiTest {
     private static MoviesServer server;
     private static HttpClient client;
     private static final Gson gson = new Gson();
-    private static final Type MOVIE_LIST_TYPE = new TypeToken<List<Movie>>(){}.getType();
+    private static final Type MOVIE_LIST_TYPE = new TypeToken<List<Movie>>() {
+    }.getType();
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -100,12 +101,12 @@ public class MoviesApiTest {
     @Test
     void getMovieById_existingMovie_returnsMovie() throws Exception {
         String movieJson = """
-            {
-                "name": "Тестовый фильм",
-                "description": "Для тестирования",
-                "duration": 100
-            }
-            """;
+                {
+                    "name": "Тестовый фильм",
+                    "description": "Для тестирования",
+                    "duration": 100
+                }
+                """;
 
         HttpRequest postReq = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -145,12 +146,12 @@ public class MoviesApiTest {
     @Test
     void deleteMovie_existingMovie_returnsNoContent() throws Exception {
         String movieJson = """
-            {
-                "name": "Фильм для удаления",
-                "description": "Будет удален",
-                "duration": 90
-            }
-            """;
+                {
+                    "name": "Фильм для удаления",
+                    "description": "Будет удален",
+                    "duration": 90
+                }
+                """;
 
         HttpRequest postReq = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
