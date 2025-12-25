@@ -12,7 +12,7 @@ public class MoviesServer {
     public MoviesServer(MoviesStore moviesStore, int i) {
         try {
             server = HttpServer.create(new InetSocketAddress(8080), 0);
-            server.createContext("/movies", new MoviesHandler());
+            server.createContext("/movies", new MoviesHandler(moviesStore));
         } catch (IOException e) {
             throw new RuntimeException("Не удалось создать HTTP-сервер", e);
         }
