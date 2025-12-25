@@ -8,14 +8,16 @@ import java.net.InetSocketAddress;
 
 public class MoviesServer {
     private final HttpServer server;
+    private final MoviesStore moviesStore;
 
-    public MoviesServer(MoviesStore moviesStore, int i) {
-        try {
-            server = HttpServer.create(new InetSocketAddress(8080), 0);
-            server.createContext("/movies", new MoviesHandler(moviesStore));
-        } catch (IOException e) {
-            throw new RuntimeException("Не удалось создать HTTP-сервер", e);
-        }
+    public MoviesServer() throws IOException {
+        this.moviesStore = new MoviesStore();
+        this.server = HttpServer.create(new InetSocketAddress(8080), 0);
+
+        MoviesHandler moviesHandler = new MoviesHandler(moviesStore);
+        server.createContext("/movies", moviesHandler);
+
+        server.setExecutor(null);
     }
 
     public void start() {
@@ -26,5 +28,9 @@ public class MoviesServer {
     public void stop() {
         server.stop(0);
         System.out.println("Сервер остановлен");
+    }
+
+    public MoviesStore getMoviesStore() {
+        return moviesStore;
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.practicum.moviehub.store.MoviesStore;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -21,9 +22,9 @@ public class MoviesApiTest {
     private static HttpClient client;
 
     @BeforeAll
-    static void beforeAll() {
+    static void beforeAll() throws IOException {
         // !!! Реализуйте метод beforeAll
-        server = new MoviesServer(new MoviesStore(), 8080);
+        server = new MoviesServer();
         server.start();
 
         client = HttpClient.newBuilder()
