@@ -25,8 +25,7 @@ public class MoviesApiTest {
     private static MoviesServer server;
     private static HttpClient client;
     private static final Gson gson = new Gson();
-    private static final Type MOVIE_LIST_TYPE = new TypeToken<List<Movie>>() {
-    }.getType();
+    private static final Type MOVIE_LIST_TYPE = new TypeToken<List<Movie>>() {}.getType();
 
     @BeforeAll
     static void beforeAll() throws IOException {
