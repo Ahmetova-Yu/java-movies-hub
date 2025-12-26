@@ -71,13 +71,13 @@ public class MoviesApiTest {
 
     @Test
     void addMovie_validData_returnsCreatedMovie() throws Exception {
-        String movieJson = """
-                {
-                    "name": "Рапунцель",
-                    "description": "Мультфильм о принцессе с длинными волосами",
-                    "duration": 169
-                }
-                """;
+        String movieJson = String.join("\n",
+                "{",
+                "    \"name\": \"Тестовый фильм\",",
+                "    \"description\": \"Для тестирования\",",
+                "    \"duration\": 90",
+                "}"
+        );
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -91,21 +91,22 @@ public class MoviesApiTest {
 
         Movie createdMovie = gson.fromJson(resp.body(), Movie.class);
         assertNotNull(createdMovie);
-        assertEquals("Рапунцель", createdMovie.getName());
-        assertEquals("Мультфильм о принцессе с длинными волосами", createdMovie.getDescription());
-        assertEquals(169, createdMovie.getDuration());
+        assertEquals("Тестовый фильм", createdMovie.getName());
+        assertEquals("Для тестирования", createdMovie.getDescription());
+        assertEquals(90, createdMovie.getDuration());
         assertTrue(createdMovie.getId() > 0);
     }
 
     @Test
     void getMovieById_existingMovie_returnsMovie() throws Exception {
-        String movieJson = """
-                {
-                    "name": "Тестовый фильм",
-                    "description": "Для тестирования",
-                    "duration": 100
-                }
-                """;
+
+        String movieJson = String.join("\n",
+                "{",
+                "    \"name\": \"Тестовый фильм\",",
+                "    \"description\": \"Для тестирования\",",
+                "    \"duration\": 90",
+                "}"
+        );
 
         HttpRequest postReq = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
@@ -144,13 +145,13 @@ public class MoviesApiTest {
 
     @Test
     void deleteMovie_existingMovie_returnsNoContent() throws Exception {
-        String movieJson = """
-                {
-                    "name": "Фильм для удаления",
-                    "description": "Будет удален",
-                    "duration": 90
-                }
-                """;
+        String movieJson = String.join("\n",
+                "{",
+                "    \"name\": \"Фильм для удаления\",",
+                "    \"description\": \"Будет удален\",",
+                "    \"duration\": 90",
+                "}"
+        );
 
         HttpRequest postReq = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
