@@ -43,6 +43,7 @@ abstract class BaseHttpHandler implements HttpHandler {
 
     protected void sendNoContent(HttpExchange exchange) throws IOException {
         exchange.sendResponseHeaders(204, -1);
+        exchange.getResponseBody().close();
     }
 
     protected <T> T parseJson(String json, Class<T> clazz) {

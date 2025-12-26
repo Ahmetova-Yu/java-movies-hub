@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Comparator;
 import java.util.List;
 
 public class MoviesHandler extends BaseHttpHandler {
@@ -58,7 +59,7 @@ public class MoviesHandler extends BaseHttpHandler {
                     break;
 
                 default:
-                    sendError(exchange, 404, "Некорректный метод");
+                    sendError(exchange, 405, "Method Not Allowed");
             }
         } catch (Exception e) {
             sendError(exchange, 500, "Ошибка сервера");
@@ -66,13 +67,16 @@ public class MoviesHandler extends BaseHttpHandler {
     }
 
     private boolean isMovieByIdPath(String path) {
-        return path.startsWith("/movies/") &&
-                path.length() > "/movies/".length() &&
-                path.substring("/movies/".length()).matches("\\d+");
+        return path.startsWith("/movies/") && path.length() > "/movies/".length();
     }
 
     private void handleGetMovies(HttpExchange exchange) throws IOException {
+        String query = exchange.getRequestURI().getQuery();
         List<Movie> movies = moviesStore.getAllMovie();
+
+        if (query != null && query.contains("sortBy=name")) {
+            movies.sort(Comparator.comparing(Movie::getName));
+        }
         sendJson(exchange, 200, movies);
     }
 
